@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>{{book.title}}</h1>
+        <p>Author: {{book.author}}</p>
+        <p>Editorial: {{book.editorial}}</p>
+        <p>Year:  {{book.year}}</p>
+        <p>Resume: {{book.summary}}</p>
+
+        <br>
+        <h2>Add comment</h2>
+        <form action="/book/comment/new/{{book.id}}" method="post">
+            <div class="form-group">
+                <p>User</p>
+                <input class="form-control" type="text" name="user" value='{{#user}}{{.}}{{/user}}'>
+            </div>
+
+            <div class="form-group">
+                <p>Comment</p>
+                <textarea class="form-control" name="detail" id="" cols="30" rows="10"></textarea>
+            </div>
+
+            <div class="form-group">
+                <p>Rate</p>
+                <input class="form-control" type="number" name="score">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mb-2">Create</button>
+            </div>
+        </form>
+        <br>
+
+        {{^noComments}}
+        <h2 class="text-success">Comments</h2>
+        {{/noComments}}
+
+        {{#book.comments}}
+        <h5>Comment {{-index}}</h5>
+            <div class="alert alert-info">
+                <p class="font-weight-bold">{{user}}</p>
+                <p>{{detail}}</p>
+                <p>Score</p>
+                <p>{{score}}</p>
+                <a href="/book/{{book.id}}/comment/{{id}}/delete">Delete comment</a>
+            </div>
+        {{/book.comments}}
+    </div>
+</body>
+</html>
